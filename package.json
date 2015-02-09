@@ -1,0 +1,17 @@
+{
+  "name": "psealock.github.io",
+  "version": "0.0.0",
+  "description": "internets",
+  "scripts": {
+    "hexo": "echo \"remove old stuff...\" && rm -rf blog && mkdir blog && cd hexo && echo \"generating hexo...\" && hexo generate && mv -v public/* ../blog"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/psealock/psealock.github.io.git"
+  },
+  "author": "Paul Sealock",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/psealock/psealock.github.io/issues"
+  }
+}

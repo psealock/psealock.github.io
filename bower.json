@@ -1,0 +1,21 @@
+{
+  "name": "psealock.github.io",
+  "version": "0.0.0",
+  "homepage": "http://psealock.github.io",
+  "authors": [
+    "psealock <psealock@gmail.com>"
+  ],
+  "description": "internets",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "budget": "https://github.com/psealock/budget-visualization.git"
+  }
+}

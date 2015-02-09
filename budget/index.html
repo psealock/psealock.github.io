@@ -1,0 +1,591 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+
+  <script src="webcomponents.js"></script>
+  
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
+  <style shim-shadowdom="">
+/*******************************
+          Flex Layout
+*******************************/
+
+html /deep/ [layout][horizontal], html /deep/ [layout][vertical] {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+html /deep/ [layout][horizontal][inline], html /deep/ [layout][vertical][inline] {
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+html /deep/ [layout][horizontal] {
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+html /deep/ [layout][horizontal][reverse] {
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+html /deep/ [layout][vertical] {
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+html /deep/ [layout][vertical][reverse] {
+  -ms-flex-direction: column-reverse;
+  -webkit-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+html /deep/ [layout][wrap] {
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+html /deep/ [layout][wrap-reverse] {
+  -ms-flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
+}
+
+html /deep/ [flex] {
+  -ms-flex: 1 1 0.000000001px;
+  -webkit-flex: 1;
+  flex: 1;
+  -webkit-flex-basis: 0.000000001px;
+  flex-basis: 0.000000001px;
+}
+
+html /deep/ [vertical][layout] > [flex][auto-vertical], html /deep/ [vertical][layout]::shadow [flex][auto-vertical] {
+  -ms-flex: 1 1 auto;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
+
+html /deep/ [flex][auto] {
+  -ms-flex: 1 1 auto;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
+
+html /deep/ [flex][none] {
+  -ms-flex: none;
+  -webkit-flex: none;
+  flex: none;
+}
+
+html /deep/ [flex][one] {
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+html /deep/ [flex][two] {
+  -ms-flex: 2;
+  -webkit-flex: 2;
+  flex: 2;
+}
+
+html /deep/ [flex][three] {
+  -ms-flex: 3;
+  -webkit-flex: 3;
+  flex: 3;
+}
+
+html /deep/ [flex][four] {
+  -ms-flex: 4;
+  -webkit-flex: 4;
+  flex: 4;
+}
+
+html /deep/ [flex][five] {
+  -ms-flex: 5;
+  -webkit-flex: 5;
+  flex: 5;
+}
+
+html /deep/ [flex][six] {
+  -ms-flex: 6;
+  -webkit-flex: 6;
+  flex: 6;
+}
+
+html /deep/ [flex][seven] {
+  -ms-flex: 7;
+  -webkit-flex: 7;
+  flex: 7;
+}
+
+html /deep/ [flex][eight] {
+  -ms-flex: 8;
+  -webkit-flex: 8;
+  flex: 8;
+}
+
+html /deep/ [flex][nine] {
+  -ms-flex: 9;
+  -webkit-flex: 9;
+  flex: 9;
+}
+
+html /deep/ [flex][ten] {
+  -ms-flex: 10;
+  -webkit-flex: 10;
+  flex: 10;
+}
+
+html /deep/ [flex][eleven] {
+  -ms-flex: 11;
+  -webkit-flex: 11;
+  flex: 11;
+}
+
+html /deep/ [flex][twelve] {
+  -ms-flex: 12;
+  -webkit-flex: 12;
+  flex: 12;
+}
+
+/* alignment in cross axis */
+
+html /deep/ [layout][start] {
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+html /deep/ [layout][center], html /deep/ [layout][center-center] {
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+html /deep/ [layout][end] {
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+
+/* alignment in main axis */
+
+html /deep/ [layout][start-justified] {
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+html /deep/ [layout][center-justified], html /deep/ [layout][center-center] {
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+html /deep/ [layout][end-justified] {
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+html /deep/ [layout][around-justified] {
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+html /deep/ [layout][justified] {
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+/* self alignment */
+
+html /deep/ [self-start] {
+  -ms-align-self: flex-start;
+  -webkit-align-self: flex-start;
+  align-self: flex-start;
+}
+
+html /deep/ [self-center] {
+  -ms-align-self: center;
+  -webkit-align-self: center;
+  align-self: center;
+}
+
+html /deep/ [self-end] {
+  -ms-align-self: flex-end;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+}
+
+html /deep/ [self-stretch] {
+  -ms-align-self: stretch;
+  -webkit-align-self: stretch;
+  align-self: stretch;
+}
+
+/*******************************
+          Other Layout
+*******************************/
+
+html /deep/ [block] {
+  display: block;
+}
+
+/* ie support for hidden */
+html /deep/ [hidden] {
+  display: none !important;
+}
+
+html /deep/ [relative] {
+  position: relative;
+}
+
+html /deep/ [fit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+body[fullbleed] {
+  margin: 0;
+  height: 100vh;
+}
+
+/*******************************
+            Other
+*******************************/
+
+html /deep/ [segment], html /deep/ segment {
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 1em 0.5em;
+  padding: 1em;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px 5px 5px 5px;
+}
+
+</style>
+
+<script src="polymer.js"></script>
+
+
+  
+
+  
+
+  
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+</head>
+<body><div hidden=""><polymer-element name="pie-chart" attributes="pieData" assetpath="../bower_components/budget/app/elements/">
+    <template>
+        <style>
+            :host {
+                display: block;
+                height: 500px;
+            }
+            text {
+              fill: white;
+            }
+            .controls {
+              display: inline-block;
+              margin: 0 0 0 20px;
+            }
+            svg {
+              float: right;
+              margin: 0 20px 0 0;
+            }
+            .arc path {
+              stroke: #fff;
+            }
+        </style>
+        <div class="controls">
+          <template repeat="{{d in data}}">
+            <p><label for="input">{{d.type}}: </label>
+            <input id="input" type="range" value="{{d.amount}}" min="0" max="5000" on-input="{{refreshChart}}"> ${{d.amount}}</p>
+          </template>
+          <p>Total: ${{total}}</p>
+        </div>
+        <svg id="svg"></svg>
+    </template>
+    <script>
+        Polymer('pie-chart',{
+            total: 0,
+            createElements: function () {
+              var width = 500,
+                  height = 500,
+                  radius = Math.min(width, height) / 2;
+
+              this.color = d3.scale.ordinal()
+                  .range(["green", "orange", "blue", "red", "brown"]);
+
+              this.arc = d3.svg.arc()
+                  .outerRadius(radius - 10)
+                  .innerRadius(0);
+
+              this.pie = d3.layout.pie()
+                  .sort(null)
+                  .value(function(d) { return d.amount; });
+
+              this.svg = d3.select(this.$.svg)
+                  .attr("width", width)
+                  .attr("height", height)
+                .append("g")
+                  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            },
+            drawChart: function () {
+              var me = this;
+
+              me.data.forEach(function (d) {
+                d.amount = +d.amount;
+              });
+
+              me.g = me.svg.selectAll(".arc")
+                  .data(me.pie(me.data))
+                .enter().append("g")
+                  .attr("class", "arc");
+
+              me.g.append("path")
+                  .attr("d", me.arc)
+                  .style("fill", function(d) { return me.color(d.data.type); });
+
+              me.g.append("text")
+                  .attr("transform", function(d) { return "translate(" + me.arc.centroid(d) + ")"; })
+                  .attr("dy", ".35em")
+                  .style("text-anchor", "middle")
+                  .text(function(d) { return d.data.type; });
+
+              me.computeTotal();
+            },
+            refreshChart: function () {
+              var me = this;
+
+              me.g.data(me.pie(me.data))
+                .select("path").attr("d", me.arc);
+
+              me.g.select("text")
+                .attr("transform", function(d) { return "translate(" + me.arc.centroid(d) + ")"; });
+
+              me.total = 0;
+              me.computeTotal();
+            },
+            computeTotal: function () {
+              var me = this;
+              this.data.forEach(function (d) {
+                d.amount = +d.amount;
+                me.total += d.amount;
+              });
+            },
+            domReady: function () {
+              var me = this;
+              this.cntrl = document.querySelector('bv-controller');
+              this.cntrl.addEventListener('update:processedData', function (e) {
+                me.pieData = e.detail;
+                me.refreshChart();
+              });
+              this.createElements();
+            },
+            pieDataChanged: function (oldValue, newValue) {
+              if(newValue) {
+                this.data = newValue;
+                this.drawChart();
+              }
+            }
+        });
+    </script>
+</polymer-element>
+
+<polymer-element name="bv-controller" attributes="url" assetpath="../bower_components/budget/app/elements/">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<section>
+			<pie-chart piedata="{{processedData}}"></pie-chart>
+			<!-- <pie-chart pieData="{{income}}"></pie-chart> -->
+		</section>
+		<section>
+			<template repeat="{{item in missedResults}}">
+				<leftover-item data="{{item}}" catergories="{{catergories}}"></leftover-item>
+			</template>
+		</section>
+	</template>
+	<script>
+		Polymer('bv-controller',{
+			data: null,
+			catergories: ['rent', 'groceries', 'restaurant', 'cash', 'car', 'entertainment', 'goods', 'utilities', 'childcare'],
+			childcare: ['becc'],
+			rent: ['rent'],
+			cash: ['Atm Debit'],
+			car: ['Truckst', 'parking', 'bp brooklyn', 'Bp Connect', 'caltex'],
+			utilities: ['vodafone', 'post', 'Twl 134 Wellington'],
+			entertainment: ['evolution', 'evo online', 'bike', 'karori sanctuary', 'Waterfront Hire & To', 'zoo', 'sports', 'cinema'],
+			groceries: ['New World', 'Moore Wilsons', 'Trade Aid', 'Countdown', 'Commonsense Organics', 'Wairarapa Eco Farm', 'Pak N Save', 'fruit supply', 'foodmart', 'foodmarket', 'mart', 'food'],
+			restaurant: ['restaurant', 'restau', 'resturant', 'roast', 'cha', 'cellar room', 'sushi', 'kebab', 'ramen', 'takeaway', 'cafe', 'Deli', 'Bakery', 'Udon', 'malaysia', 'gelato', 'pan de muerto', "Jo'S", 'espresso', 'satay', 'jolt', 'bar', 'wasabi', 'coffee', 'korean'],
+			goods: ['recycling', 'mirrou', 'warehous', 'dotti', 'Coin Save', 'Rainbow Bridges Ltd', 'recycle', 'bunnings', 'salvation'],
+			getData: function () {
+				var me = this;
+				d3.csv(me.url, function (error, data) {
+					me.data = data;
+					me.processData(data);
+				});
+			},
+			processData: function (data) {
+				var me = this,
+					missedResults = [],
+					income = [],
+					processedData = [],
+					results = {};
+
+				data.forEach(function (item) {
+					var amount = parseInt(item.amount, 10);
+					if(!item.counted && amount > 0) {
+						income.push(item);
+						item.counted = true;
+					}
+					if(!item.counted){
+						me.catergories.forEach(function (cat) {
+							if(results[cat] === undefined) {
+								results[cat] = 0;
+							}
+							me[cat].forEach(function (match) {
+								var re = new RegExp(match, 'gi');
+								if(item.card.match(re) || item.details.match(re) || item.type.match(re) || item.id.match(re)) {
+									item.amount = amount;
+									results[cat] += -(item.amount);
+									item.counted = true;
+								}
+							});
+						});
+					}
+				});
+
+				data.forEach(function (item) {
+					if(!item.counted) {
+						missedResults.push(item);
+					}
+				});
+
+				for(prop in results) {
+					if(results.hasOwnProperty(prop)) {
+						var obj = {};
+						obj.type = prop;
+						obj.amount = results[prop];
+
+						processedData.push(obj);
+					}
+				}
+
+				this.processedData = processedData;
+				this.missedResults = missedResults;
+				this.income = income;
+			},
+			updateProcessedData: function (data) {
+				this.fire('update:processedData', data);
+			},
+			domReady: function () {
+				this.getData();
+			}
+		});
+	</script>
+</polymer-element>
+<polymer-element name="leftover-item" attributes="data catergories" assetpath="../bower_components/budget/app/elements/">
+	<template>
+		<style>
+			:host {
+				display: block;
+				transition: height 400ms ease-in-out, opacity 400ms ease-in-out;
+				height: 40px;
+				opacity: 1;
+			}
+			:host(.delete) {
+				height: 0;
+				opacity: 0;
+			}
+			section {
+				margin: 5px 0;
+				display: inline-block;
+				border-bottom: 1px solid lightgray;
+				background: bisque;
+				padding: 5px 0;
+			}
+			div {
+				display: inline-block;
+				width: 75px;
+				padding: 0 5px;
+			}
+			div.details {
+				width: 200px;
+			}
+			div.date {
+				width: 100px;
+			}
+			div.choose {
+				width: 135px;
+			}
+		</style>
+		<section>
+			<div class="type">{{data.type}}</div>
+			<div class="details">{{data.details}}</div>
+			<div class="date">{{data.date}}</div>
+			<div class="amount">{{data.amount}}</div>
+			<div class="choose">
+				<select id="selected" name="select" on-input="{{addItem}}">
+				  <option value="" disabled="" selected="">Choose a catergory</option>
+				  <template repeat="{{cat in catergories}}">
+				  	<option value="{{cat}}">{{cat}}</option>
+				  </template>
+				</select>
+			</div>
+		</section>
+	</template>
+	<script>
+		Polymer('leftover-item',{
+			addItem: function () {
+				var catergory = this.$.selected.value,
+					index = this.cntrl.missedResults.indexOf(this.data);
+
+				// this.className += ' delete';
+
+				var dataArray = this.cntrl.processedData;
+				for (var i = 0; i < dataArray.length; i++) {
+					if(dataArray[i].type === catergory) {
+						dataArray[i].amount += -this.data.amount;
+					}
+				}
+
+				this.cntrl.missedResults.splice(index, 1);
+				this.cntrl.updateProcessedData(dataArray);
+			},
+			domReady: function () {
+				this.cntrl = document.querySelector('bv-controller');
+			}
+		});
+	</script>
+</polymer-element></div>
+
+
+<bv-controller url="assets/anz-nov.csv"></bv-controller>
+
+
+
+
+</body></html>

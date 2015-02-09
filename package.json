@@ -3,11 +3,20 @@
   "version": "0.0.1",
   "description": "internets",
   "scripts": {
-    "hexo": "rm -rf blog && mkdir blog && cd hexo && hexo clean && hexo generate && mv -v public/* ../blog"
+    "hexo": "rm -rf blog && mkdir blog && cd hexo && hexo clean && hexo generate && mv -v public/* ../blog",
+    "budget": "bower install && cd bower_components/budget && bower install && cd ../.. && vulcanize -o budget/index.html bower_components/budget/app/index.html && npm run budget-replace-deps && npm run budget-move-deps && npm run budget-move-assets",
+    "budget-replace-deps": "replace '../bower_components/budget/bower_components/polymer/' '' budget/index.html && replace '../bower_components/budget/bower_components/webcomponentsjs/' '' budget/index.html",
+    "budget-move-deps": "cp bower_components/budget/bower_components/polymer/polymer.js budget && cp bower_components/budget/bower_components/webcomponentsjs/webcomponents.js budget",
+    "budget-move-assets": "cp -r bower_components/budget/app/assets budget"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/psealock/psealock.github.io.git"
+  },
+  "dependencies": {
+    "vulcanize": "0.7.8",
+    "hexo": "3.0.0",
+    "replace": "0.3.0"
   },
   "author": "Paul Sealock"
 }

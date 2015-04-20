@@ -1,0 +1,85 @@
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+    height: 100%;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
+.content {
+	width: 90%;
+	height: 100%;
+	max-width: 700px;
+	position: relative;
+	display: block;
+}
+
+.center {
+	margin: 0 auto;
+	display: block;
+}
+
+.text-center {
+	text-align: center;
+}
+
+header {
+	display: inline-block;
+	width: 100%;
+	margin: 10px 0 0 0;
+}
+
+.navbar a{
+	float: right;
+	margin: 0 10px;
+	font-size: 0.7em;
+}
+
+.navbar a:hover {
+	opacity: 0.5;
+}
+
+.image {
+	width: 200px;
+	height: 200px;
+	background: gainsboro;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 100px;
+}
+
+.separator {
+	margin: 0 10px;
+}
+
+section {
+	margin-top: 40px;
+}
+
+.subsection {
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+.work {
+	display: inline-block;
+	width: 33%;
+	height: 200px;
+	float: left;
+	margin: 20px 0 0 0;
+	font-size: 0.9em;
+}
+
+.work-logo {
+	height: 70px;
+}
